@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOOD BLADE: ZERO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-hud" class="hud-top hidden">
+    <div class="hp-container">
+        <div id="game-username-tag" style="color: yellow; font-family: monospace; font-size: 24px; margin-bottom: 5px;"></div>
+        <div class="hp-label">HEALTH</div>
+        <div class="hp-bar-bg">
+            <div id="hp-fill" class="hp-bar-fill"></div>
+            <div id="hp-text" class="hp-text">100 %</div>
+        </div>
+    </div>
+
+    <div id="room-display-wrapper">
+        <div id="room-id">ROOM 1</div>
+    </div>
+
+    <div class="controls-hint">MOVE=WASD | ATTACK=F | INTERACT=E</div>
+</div>
+
+        <div class="key-status">
+            <span class="key-icon">🔑</span>
+            <span class="key-icon">🔑</span>
+        </div>
+
+        <div id="interact-prompt" class="hidden">INTERACT [E]</div>
+        
+        <canvas id="gameCanvas"></canvas>
+
+        <div id="menu-main" class="ui-layer title-screen">
+            <h1 class="game-title">BLOOD BLADE: ZERO</h1>
+            <div class="menu-options">
+                <button onclick="game.triggerSplash()">NEW GAME</button>
+                <button onclick="game.toggleLayer('menu-options')">OPTIONS</button>
+                <button onclick="game.toggleLayer('menu-about')">ABOUT</button>
+                <button onclick="game.toggleLayer('menu-login')">LOGIN</button>
+            </div>
+        </div>
+
+        <div id="splash-screen" class="ui-layer hidden splash-bg">
+            <h1 class="splash-text">STARTING...</h1>
+        </div>
+
+        <div id="puzzle-layer" class="ui-layer hidden puzzle-screen">
+            <h1 class="puzzle-title">SECURITY OVERRIDE</h1>
+            <div class="puzzle-container">
+                <img id="puzzle-img" src="">
+            </div>
+            <div class="puzzle-ui-bottom">
+                <input type="number" id="puzzle-input" placeholder="0">
+                <button class="submit-btn" onclick="game.checkPuzzle()">SUBMIT</button>
+            </div>
+        </div>
+
+        <div id="menu-options" class="ui-layer hidden title-screen">
+            <h1>OPTIONS</h1>
+            <p>Difficulty: EASY</p>
+            <button onclick="game.toggleLayer('menu-main')">BACK</button>
+        </div>
+
+        <div id="menu-about" class="ui-layer hidden title-screen">
+            <h1>ABOUT</h1>
+            <p>BLOOD BLADE: ZERO - v1.0</p>
+            <button onclick="game.toggleLayer('menu-main')">BACK</button>
+        </div>
+
+        <div id="menu-login" class="ui-layer hidden title-screen">
+    <h1>SYSTEM LOGIN</h1>
+    <div class="login-box">
+        <input type="text" id="login-username" placeholder="USERNAME">
+        <input type="password" id="login-pin" placeholder="PIN (NUMBERS ONLY)">
+        <br>
+        <button onclick="game.handleAuth()">CREATE ACCOUNT / LOGIN</button>
+        <button onclick="game.toggleLayer('menu-main')">BACK</button>
+    </div>
+</div>
+
+<div id="user-welcome" class="hidden">
+    <p id="welcome-text" style="color: #00ff00; font-family: 'Courier New', Courier, monospace; font-size: 20px;"></p>
+    <button id="logout-btn" onclick="game.logout()" style="padding: 5px 10px; font-size: 14px;">LOGOUT</button>
+</div>
+
+        <div id="menu-death" class="ui-layer hidden">
+            <h1 style="color:red; font-size: 8vw;">WASTED</h1>
+            <button onclick="location.reload()">RETRY</button>
+        </div>
+        
+        <div id="menu-win" class="ui-layer hidden">
+            <h1 style="color:lime; font-size: 8vw;">COMPLETE</h1>
+            <button onclick="location.reload()">MENU</button>
+        </div>
+    </div>
+
+    <script src="entity.js"></script>
+    <script src="player.js"></script>
+    <script src="zombie.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

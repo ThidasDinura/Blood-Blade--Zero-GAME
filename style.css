@@ -1,0 +1,318 @@
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { 
+    background: #000; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    color: #fff; 
+    font-family: 'Courier New', Courier, monospace; 
+    overflow: hidden; 
+}
+
+#game-wrapper { 
+    position: relative; 
+    width: 95vw; 
+    height: 53.43vw; 
+    max-height: 95vh; 
+    max-width: 168.8vh; 
+    border: 4px solid #222; 
+    background: #000;
+}
+
+canvas { 
+    width: 100%; 
+    height: 100%; 
+    display: block; 
+    image-rendering: pixelated; 
+}
+
+
+.ui-layer { 
+    position: absolute; 
+    inset: 0; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    z-index: 100; 
+    text-align: center;
+}
+
+.hidden { display: none !important; }
+
+.title-screen { 
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('image (5).png'); 
+    background-size: 100% 100%; 
+}
+
+.game-title { 
+    font-size: 6vw; 
+    text-shadow: 0 0 15px #7000ff; 
+    margin-bottom: 40px; 
+}
+
+.menu-options { display: flex; flex-direction: column; gap: 20px; }
+
+button { 
+    padding: 15px 80px; 
+    font-size: 1.5vw; 
+    cursor: pointer; 
+    background: rgba(30, 0, 60, 0.9); 
+    color: #fff; 
+    border: 2px solid #7000ff; 
+    border-radius: 50px; 
+    text-transform: uppercase; 
+    font-weight: bold; 
+    transition: 0.2s;
+}
+
+button:hover { 
+    background: #7000ff; 
+    box-shadow: 0 0 25px #7000ff; 
+}
+
+
+.hud-top { 
+    position: absolute; 
+    top: 20px; 
+    width: 100%; 
+    padding: 0 40px; 
+    display: flex; 
+    justify-content: space-between; 
+    pointer-events: none; 
+    z-index: 10;
+}
+
+.hp-container { display: flex; flex-direction: column; align-items: flex-start; }
+.hp-label { font-size: 1.2vw; font-weight: bold; margin-bottom: 5px; color: #fff; }
+.hp-bar-bg { 
+    width: 350px; 
+    height: 45px; 
+    background: #300; 
+    border-radius: 0 25px 25px 0; 
+    overflow: hidden; 
+    position: relative;
+    border: 3px solid #fff;
+}
+.hp-bar-fill { 
+    height: 100%; 
+    background: #f00; 
+    width: 100%; 
+    transition: width 0.3s; 
+    border-radius: 0 20px 20px 0; 
+}
+.hp-text { 
+    position: absolute; 
+    inset: 0; 
+    text-align: center; 
+    line-height: 40px; 
+    font-weight: bold; 
+    font-size: 1.5vw; 
+}
+
+.controls-hint { 
+    text-align: right; 
+    font-size: 1.1vw; 
+    line-height: 1.4; 
+    color: #aaa; 
+    text-transform: uppercase; 
+}
+
+.key-status { 
+    position: absolute; 
+    bottom: 30px; 
+    right: 40px; 
+    display: flex; 
+    gap: 15px; 
+    z-index: 10;
+}
+.key-icon { 
+    font-size: 2.5vw; 
+    filter: grayscale(1) brightness(0.2); 
+    transition: all 0.5s ease; 
+}
+.key-icon.collected { 
+    filter: grayscale(0) brightness(1.2) drop-shadow(0 0 15px #ffd700); 
+    color: #ffd700; 
+}
+
+#interact-prompt { 
+    position: absolute; 
+    bottom: 320px; 
+    right: 18px; 
+    color: #ffff00; 
+    font-size: 0.8vw; 
+    font-weight: bold;
+    background: rgba(0,0,0,0.5); 
+    padding: 5px 15px; 
+    border-radius: 10px;
+    z-index: 5;
+}
+
+
+.puzzle-screen {
+    background: linear-gradient(rgba(15, 0, 30, 0.95), rgba(30, 0, 60, 0.95)), url('image (5).png');
+    background-size: 100% 100%;
+}
+
+.puzzle-title {
+    font-size: 4.5vw;
+    color: #00ffff;
+    text-shadow: 0 0 15px #00ffff, 0 0 30px #008888;
+    margin-bottom: 20px;
+    letter-spacing: 5px;
+}
+
+.puzzle-container {
+    background: #fff;
+    padding: 15px;
+    border-radius: 15px;
+    border: 6px solid #a349a4;
+    box-shadow: 0 0 40px rgba(163, 73, 164, 0.6);
+    max-width: 70%;
+}
+
+#puzzle-img { width: 100%; max-width: 1000px; height: auto; display: block; }
+.puzzle-ui-bottom { margin-top: 25px; display: flex; gap: 30px; align-items: center; }
+
+#puzzle-input {
+    width: 320px;
+    height: 85px;
+    background: #111;
+    border: 3px solid #444;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 2.5vw;
+    text-align: center;
+    letter-spacing: 5px;
+}
+
+.submit-btn {
+    width: 400px;
+    height: 100px;
+    font-size: 2.9vw;
+    background: #6f00ff67;
+    color: #ffffff;
+    border: 3px solid #00000039;
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.tries-text { margin-top: 15px; font-size: 2.8vw; color: #fff; font-weight: bold; }
+
+
+.splash-bg { background: #000; }
+.splash-text { font-size: 7vw; color: #0040ffca; }
+
+#menu-death h1 { font-size: 8vw; color: #f00; text-shadow: 0 0 20px #f00; }
+#menu-win h1 { font-size: 8vw; color: #0f0; text-shadow: 0 0 20px #0f0; }
+
+#room-id { 
+    position: absolute;
+    top: 80px;
+    left: 40px;
+    font-size: 2vw;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 2px 2px #000;
+}
+.login-box {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+    background: rgba(20, 0, 40, 0.9); /* Dark Purple tint */
+    padding: 50px;
+    border: 4px double #7000ff; /* Double border for old school feel */
+    box-shadow: 0 0 30px #7000ff, inset 0 0 15px #000;
+}
+
+#login-username, #login-pin {
+    width: 400px;
+    height: 60px;
+    background: #000;
+    border: 2px solid #a349a4; /* Match your platform color */
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1.5vw;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#login-username:focus, #login-pin:focus {
+    border-color: #fff;
+    box-shadow: 0 0 15px #a349a4;
+    outline: none;
+}
+
+/* Welcome Message near the HP Bar */
+#user-welcome {
+    position: absolute;
+    top: 130px; /* Right under the HP/Room ID */
+    left: 40px;
+    z-index: 200;
+    text-align: left;
+}
+
+#welcome-text {
+    font-size: 1.8vw;
+    color: #0f0; /* Keeping the lime green for "System" messages */
+    text-shadow: 2px 2px #000;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+#logout-btn {
+    padding: 8px 25px;
+    font-size: 1vw;
+    background: #400; /* Blood Red */
+    border: 2px solid #f00;
+    border-radius: 0; /* Keep it boxy/old school */
+    width: auto;
+    height: auto;
+}
+
+#logout-btn:hover {
+    background: #f00;
+    box-shadow: 0 0 15px #f00;
+}
+/* Center the Room ID at the top */
+#room-display-wrapper {
+    position: absolute;
+    top: -62px;          /* Tight 10px gap from the top */
+    left: 40%;
+    transform: translateX(-50%);
+    width: auto;
+    white-space: nowrap; /* Forces Room and Section onto one single line */
+    pointer-events: none;
+    z-index: 20;
+}
+
+#room-id {
+    font-family: 'Monospace', sans-serif;
+    font-size: 28px;    /* Slightly smaller to keep it sleek on one line */
+    color: #ffffff;
+    text-shadow: 2px 2px 0px #000; /* Sharp shadow for readability */
+    letter-spacing: 2px;
+    margin: 0;
+    padding: 0;
+}
+
+
+.hud-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+.hp-container {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+}

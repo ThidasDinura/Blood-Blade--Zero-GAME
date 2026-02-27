@@ -1,0 +1,14 @@
+The researcher is developing a specialized software solution to address the concept of Dark Pattens within the local E-Commerce economy of Sri Lanka and Southern Asian regions. In these regions, consumers are frequently deceived by multiple Fake marketing tactics during the major events such as Sinhala and Tamil New Year,Valentine's Day, and Christmas, and also 11.11 sales and Cybersecurity Monday and Black Friday sales.The main point of this  research to detect false UI/UX elements to detect false pricing, which have 
+been marked up doubled and deducted as 75% but in reality, only a 15% discount was been applied. There are
+multiples and various examples for this, which is happening throughout these South Asian regions. I will
+develop and design which focus on showing how these marketing tactics work.The system which is being developed
+ will be created as a Chrome-based web extension using real-time artificial intelligence(AI) features which will 
+ use the AI language model which is Gemini 3 Flash. The researcher will use this tool to perform a semantic 
+ analysis on the document objective model(DOM) and find regional traps which include such as newcomer deals on 
+ platforms like temu ,daraz ,alibaba ,and aliExpress. These newcomer offers forces users to buy multiple items 
+ which  the consumer does not need in order to get one discounted item this tool will be used to identify some 
+ services which have  hidden fees such as cancellation fees. Some services can charge up to $100 in cancellation 
+ fees In softwares like Adobe Studio The development of the software will follow the software development life 
+ cycle technique called prototyping. which will be first used to create a low-fidelity prototype to test the AI's 
+ capability in reading the DOM files of the website such as Daraz and temu to deduceing how the pricing work. 
+Through testing and doing market research to build a high-fidelity system to ensure it is up to the task.

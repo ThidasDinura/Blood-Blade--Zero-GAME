@@ -26,7 +26,7 @@ const game = {
             const savedUser = localStorage.getItem('gameUser');
             const hudNameTag = document.getElementById('game-username-tag');
             if (savedUser && hudNameTag) {
-                hudNameTag.innerText = "AGENT: " + savedUser;
+                hudNameTag.innerText = "Zombie Killer: " + savedUser;
             }
             
             const assetList = {

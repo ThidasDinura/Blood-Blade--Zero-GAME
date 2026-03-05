@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BLOOD BLADE: ZERO - GAME</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="game.triggerSplash()">
+
+    <div id="game-hud" class="hud-top hidden">
+        <div class="hp-container">
+            <div id="game-username-tag" style="color: yellow; font-family: monospace; font-size: 19px;"></div>
+            <div class="hp-label">HEALTH</div>
+            <div class="hp-bar-bg">
+                <div id="hp-fill" class="hp-bar-fill"></div>
+                <div id="hp-text" class="hp-text">100 %</div>
+            </div>
+        </div>
+
+        <div id="room-display-wrapper">
+            <div id="room-id">ROOM 1</div>
+            <div class="key-inventory" style="position: absolute; top: 70px; left: 620px; display: flex; gap: 10px;">
+    <span class="key-icon" style="font-size: 30px; opacity: 0.2;">🔑</span>
+    <span class="key-icon" style="font-size: 30px; opacity: 0.2;">🔑</span>
+</div>
+        </div>
+
+        <div class="controls-hint">WASD=MOVE | F=ATK | E=INT</div>
+        <div id="interact-prompt" class="hidden" style="color: white; background: rgba(0,0,0,0.5); padding: 5px;">PRESS [E] TO ENTER</div>
+    </div>
+
+    <canvas id="gameCanvas"></canvas>
+
+    <div id="splash-screen" class="ui-layer hidden splash-bg"><h1>STARTING...</h1></div>
+
+    <div id="puzzle-layer" class="game-overlay pixel-bg hidden">
+        <div class="puzzle-box" style="text-align: center; background: rgba(0,0,0,0.9); padding: 30px; border: 4px solid #fff; border-radius: 10px;">
+            <h2 style="color: white; font-family: monospace;">SECURITY OVERRIDE: SOLVE THE CODE</h2>
+            <img id="puzzle-img" src="" style="max-width: 500px; border: 3px solid yellow; margin: 20px 0;">
+            <br>
+            <div style="margin-bottom: 20px;">
+                <input type="number" id="puzzle-input" placeholder="?" style="font-size: 40px; width: 100px; text-align: center; background: #000; color: #0f0; border: 2px solid #0f0;">
+                <button class="menu-btn" onclick="game.checkPuzzle()" style="vertical-align: top; height: 60px;">SUBMIT</button>
+            </div>
+            <p style="color: red; font-weight: bold; font-family: monospace;">TRIES REMAINING: <span id="tries-count">4</span></p>
+        </div>
+    </div>
+
+    <div id="menu-death" class="game-overlay pixel-bg hidden">
+        <h1 style="color:red; font-size: 100px;">WASTED</h1>
+        <button class="menu-btn" onclick="location.reload()">RETRY</button>
+        <button class="menu-btn" onclick="location.href='index.html'">MAIN MENU</button>
+    </div>
+
+    <div id="menu-win" class="game-overlay pixel-bg hidden">
+        <h1 style="color:#00ff00; font-size: 60px;">FACILITY ESCAPED</h1>
+        <h2 id="win-stats"></h2>
+        <div class="leaderboard-container">
+            <h3>TOP SURVIVORS</h3>
+            <ul id="leaderboard-list"></ul>
+        </div>
+        <button class="menu-btn" onclick="location.href='index.html'">MAIN MENU</button>
+        <button class="menu-btn" onclick="location.reload()">PLAY AGAIN</button>
+    </div>
+
+    <script src="entity.js"></script>
+    <script src="player.js"></script>
+    <script src="zombie.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>

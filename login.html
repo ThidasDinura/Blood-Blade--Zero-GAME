@@ -1,0 +1,29 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SYSTEM LOGIN</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="menu-login" class="ui-layer title-screen">
+        <h1 class="game-title">SYSTEM LOGIN</h1>
+        <div class="login-box">
+            <input type="text" id="login-username" placeholder="USERNAME">
+            <input type="password" id="login-pin" placeholder="PIN (NUMBERS ONLY)">
+            <br>
+            <button onclick="game.handleAuth()">CREATE ACCOUNT / LOGIN</button>
+            <button onclick="location.href='index.html'">BACK</button>
+        </div>
+    </div>
+    <script src="game.js"></script>
+    <script>
+        // Initialize just enough to handle the auth
+        window.addEventListener('load', () => {
+            if (typeof game !== 'undefined' && game.init) {
+                game.init(); 
+            }
+        });
+    </script>
+</body>
+</html>

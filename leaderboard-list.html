@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BLOOD BLADE: ZERO - LEADERBOARD</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="pixel-bg">
+    <div class="ui-layer">
+        <h1 class="game-title">TOP SURVIVORS</h1>
+        <div class="leaderboard-container" style="background: rgba(0,0,0,0.8); border: 4px solid gold; padding: 30px;">
+            <ul id="full-leaderboard" style="list-style: none; font-size: 24px; color: #0f0; text-align: left;">
+                </ul>
+        </div>
+        <br>
+        <button onclick="location.href='index.html'">BACK TO MENU</button>
+    </div>
+
+    <script>
+        // Script to load the scores specifically for this page
+        window.onload = () => {
+            const list = document.getElementById('full-leaderboard');
+            const scores = JSON.parse(localStorage.getItem('leaderboard')) || [];
+            if (scores.length === 0) {
+                list.innerHTML = "<li>NO DATA YET...</li>";
+            } else {
+                list.innerHTML = scores.map((s, i) => 
+                    `<li>${i+1}. ${s.name} - ${s.time}s</li>`
+                ).join('');
+            }
+        };
+    </script>
+</body>
+</html>

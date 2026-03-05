@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BLOOD BLADE: ZERO - MENU</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="menu-main" class="ui-layer title-screen">
+        <h1 class="game-title">BLOOD BLADE: ZERO</h1>
+        <div class="menu-options">
+            <button onclick="location.href='game.html'">NEW GAME</button>
+            <button onclick="location.href='options.html'">OPTIONS</button>
+            <button onclick="location.href='about.html'">ABOUT</button>
+            <button onclick="location.href='login.html'">LOGIN</button>
+        </div>
+    </div>
+
+    <div id="user-welcome" class="hidden" style="position: absolute; bottom: 20px; width: 100%; text-align: center;">
+        <p id="welcome-text" style="color: #00ff00; font-family: 'Courier New', Courier, monospace; font-size: 20px; display: inline;"></p>
+        <button id="logout-btn" onclick="game.logout()" style="padding: 5px 10px; font-size: 14px; margin-left: 10px;">LOGOUT</button>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

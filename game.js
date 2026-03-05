@@ -17,37 +17,90 @@ const game = {
     startTime: 0,
 
     init() {
-        this.canvas = document.getElementById('gameCanvas'); // Re-check here
-        if (this.canvas) {
-            this.ctx = this.canvas.getContext('2d');
-            this.canvas.width = 1920; 
-            this.canvas.height = 1080;
+    this.canvas = document.getElementById('gameCanvas'); 
+    if (this.canvas) {
+        this.ctx = this.canvas.getContext('2d');
+        this.canvas.width = 1920; 
+        this.canvas.height = 1080;
 
-            const savedUser = localStorage.getItem('gameUser');
-            const hudNameTag = document.getElementById('game-username-tag');
-            if (savedUser && hudNameTag) {
-                hudNameTag.innerText = "Zombie Killer: " + savedUser;
-            }
-            
-            const assetList = {
-                bg: 'image (5).png', 
-                p: 'run.png', 
-                z: 'zombie-walk.png', 
-                d: 'door.png', 
-                plat: 'plat.png'
-            };
-
-            for (let key in assetList) {
-                this.images[key] = new Image();
-                this.images[key].src = assetList[key];
-            }
-
-            window.onkeydown = e => this.keysHandler(e, true);
-            window.onkeyup = e => this.keysHandler(e, false);
-            this.loop();
+        const savedUser = localStorage.getItem('gameUser');
+        const hudNameTag = document.getElementById('game-username-tag');
+        if (savedUser && hudNameTag) {
+            hudNameTag.innerText = "Zombie Killer: " + savedUser;
         }
-        this.updateAuthUI(localStorage.getItem('gameUser'));
-    },
+        
+        const assetList = {
+            bg: 'image (5).png', 
+            p: 'run.png', 
+            z: 'zombie-walk.png', 
+            d: 'door.png', 
+            plat: 'plat.png'
+        };
+
+        for (let key in assetList) {
+            this.images[key] = new Image();
+            this.images[key].src = assetList[key];
+        }
+
+        // --- FIXED ANIMATION LOADING (Player & Zombie) ---
+        const numbers = ["one", "two", "three"];
+        
+        numbers.forEach((num, index) => {
+            const i = index + 1;
+            
+            // PLAYER WALK
+            this.images[`walk${i}`] = new Image();
+            this.images[`walk${i}`].src = `walk ${num}.png`;
+            this.images[`walk${i}`].onerror = () => console.warn(`Missing: walk ${num}.png`);
+            
+            // PLAYER JUMPING
+            this.images[`jumping${i}`] = new Image();
+            this.images[`jumping${i}`].src = `jumping ${num}.png`;
+            this.images[`jumping${i}`].onerror = () => console.warn(`Missing: jumping ${num}.png`);
+
+            // PLAYER SWORD (sward)
+            this.images[`sword${i}`] = new Image();
+            this.images[`sword${i}`].src = `sward ${num}.png`;
+            this.images[`sword${i}`].onerror = () => console.warn(`Missing: sward ${num}.png`);
+
+            // ZOMBIE WALK (2 frames)
+            if (i <= 2) {
+                this.images[`zwalk${i}`] = new Image();
+                this.images[`zwalk${i}`].src = `zwalk ${num}.png`;
+                this.images[`zwalk${i}`].onerror = () => console.warn(`Missing: zwalk ${num}.png`);
+            }
+
+            // ZOMBIE ATTACK (3 frames)
+            this.images[`zattack${i}`] = new Image();
+            this.images[`zattack${i}`].src = `zattack ${num}.png`;
+            this.images[`zattack${i}`].onerror = () => console.warn(`Missing: zattack ${num}.png`);
+        });
+        const soundList = {
+            bgMusic: 'game background sound.mp3', 
+            jump: 'player-jump.mp3',
+            land: 'falling player.mp3',
+            slash: 'swardslash.mp3',
+            zDie: 'zombie dead.mp3',
+            zTalk: 'zombie-sound.mp3',
+            keyPop: 'key pickup.mp3'
+        };
+
+        this.sounds = {};
+        for (let key in soundList) {
+        this.sounds[key] = new Audio(soundList[key]);
+        }
+
+
+        this.sounds.bgMusic.loop = true;
+        this.sounds.bgMusic.volume = 0.4;
+
+        window.onkeydown = e => this.keysHandler(e, true);
+        window.onkeyup = e => this.keysHandler(e, false);
+        this.loop();
+    }
+
+    this.updateAuthUI(localStorage.getItem('gameUser'));
+},
     keysHandler(e, isDown) {
         const k = e.key.toLowerCase();
         if (k === 'a') this.inputs.a = isDown; 
@@ -80,6 +133,7 @@ const game = {
         this.collectedKeys = 0;
         this.tries = 4;
         this.startTime = Date.now();
+        if(this.sounds.bgMusic) this.sounds.bgMusic.play();
         
         // Crucial: Set active to true BEFORE setting up the room
         this.active = true; 
@@ -149,10 +203,20 @@ const game = {
 
     performAttack() {
         this.player.atking = true; 
+        
+        // PLAY SWORD SLASH
+        if(this.sounds.slash) this.sounds.slash.cloneNode().play();
+
         setTimeout(() => { this.player.atking = false; }, 150);
+        
         this.zombies.forEach(z => {
             if (z.alive && Math.abs(this.player.x - z.x) < 130 && Math.abs(this.player.y - z.y) < 180) {
-                z.hp -= 40; if (z.hp <= 0) z.alive = false;
+                z.hp -= 40; 
+                
+                if (z.hp <= 0) {
+                    z.alive = false;
+                    if(this.sounds.zDie) this.sounds.zDie.cloneNode().play();
+                }
             }
         });
     },
@@ -253,10 +317,10 @@ loop() {
         }
 
         // --- 1. Update Game Logic ---
-        this.player.update(this.inputs, this.platforms, 1080);
+        this.player.update(this.inputs, this.platforms, 1080, this.sounds);
 
         this.zombies.forEach(z => {
-            z.update(this.player.x, this.player.y);
+            z.update(this.player.x, this.player.y, this.sounds);
             if (z.alive && Math.abs(this.player.x - z.x) < (z.isMega ? 120 : 70) && Math.abs(this.player.y - z.y) < 120) {
                 this.player.hp -= z.isMega ? 1.1 : 0.5;
             }
@@ -266,6 +330,7 @@ loop() {
             if (!k.col && Math.abs(this.player.x - k.x) < 100 && Math.abs(this.player.y - k.y) < 150) {
                 k.col = true; 
                 this.collectedKeys++; 
+                if(this.sounds.keyPop) this.sounds.keyPop.cloneNode().play();
                 this.updateKeyUI();
             }
         });
@@ -282,11 +347,11 @@ loop() {
         }
 
         this.platforms.forEach(p => { this.ctx.drawImage(this.images.plat, p.x, p.y, p.w, 60); });
-        this.zombies.forEach(z => { z.draw(this.ctx, this.images.z); });
+        this.zombies.forEach(z => { z.draw(this.ctx, this.images); });
         
         // Draw Player (Only if images.p is loaded)
         if (this.images.p) {
-            this.player.draw(this.ctx, this.images.p);
+            this.player.draw(this.ctx, this.images);
         }
 
         this.keys.forEach(k => { 

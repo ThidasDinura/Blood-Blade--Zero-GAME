@@ -382,3 +382,29 @@ button:hover {
     align-items: center;
     z-index: 2000; 
 }
+.menu-btn { 
+    padding: 10px 60px !important; 
+    height: auto !important; 
+    min-height: 40px !important;
+    width: 350px !important; 
+    margin: 10px 0 !important; 
+    font-size: 1.2vw !important;
+} 
+/* Specific container for the Leaderboard page buttons */
+.leaderboard-btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; 
+    margin-top: 30px;
+}
+
+/* Forces the buttons on this page to be slim and uniform */
+.leaderboard-btn-container button {
+    width: 350px !important;
+    padding: 10px 0 !important;
+    font-size: 1.2vw !important;
+    height: auto !important;
+    text-transform: uppercase;
+}
+

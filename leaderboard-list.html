@@ -8,24 +8,47 @@
 <body class="pixel-bg">
     <div class="ui-layer">
         <h1 class="game-title">TOP SURVIVORS</h1>
-        <div class="leaderboard-container" style="background: rgba(0,0,0,0.8); border: 4px solid gold; padding: 30px;">
+        
+        <div class="leaderboard-container" style="background: rgba(0,0,0,0.8); border: 4px solid gold; padding: 30px; min-width: 550px;">
             <ul id="full-leaderboard" style="list-style: none; font-size: 24px; color: #0f0; text-align: left;">
                 </ul>
         </div>
-        <br>
-        <button onclick="location.href='index.html'">BACK TO MENU</button>
+
+        <div class="leaderboard-btn-container">
+            <button onclick="clearLeaderboard()" style="border-color: #ff0000; color: #ff0000; background: rgba(40, 0, 0, 0.5);">
+                RESET SCORES
+            </button>
+            
+            <button onclick="location.href='index.html'">
+                BACK TO MENU
+            </button>
+        </div>
     </div>
 
     <script>
-        // Script to load the scores specifically for this page
+        // Function to wipe the data from the browser
+        function clearLeaderboard() {
+            if (confirm("Are you sure you want to delete all top scores, bro?")) {
+                localStorage.removeItem('leaderboard');
+                alert("Leaderboard wiped clean!");
+                location.reload(); 
+            }
+        }
+
+        // Load the scores when the page opens
         window.onload = () => {
             const list = document.getElementById('full-leaderboard');
             const scores = JSON.parse(localStorage.getItem('leaderboard')) || [];
+            
             if (scores.length === 0) {
-                list.innerHTML = "<li>NO DATA YET...</li>";
+                list.innerHTML = "<li style='justify-content: center; color: #666;'>NO DATA RECORDED</li>";
             } else {
-                list.innerHTML = scores.map((s, i) => 
-                    `<li>${i+1}. ${s.name} - ${s.time}s</li>`
+                // Shows the top 10 fastest times
+                list.innerHTML = scores.slice(0, 10).map((s, i) => 
+                    `<li>
+                        <span><span style="color: gold;">${i+1}.</span> ${s.name}</span>
+                        <span style="color: #fff;">${s.time}s</span>
+                    </li>`
                 ).join('');
             }
         };

@@ -2,25 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BLOOD BLADE: ZERO - MENU</title>
+    <title>BLOOD BLADE: ZERO - ABOUT</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .btn-small { width: 150px !important; padding: 10px !important; font-size: 16px !important; margin: 10px auto !important; }
+    </style>
 </head>
 <body>
-    <div id="menu-main" class="ui-layer title-screen">
-        <h1 class="game-title">BLOOD BLADE: ZERO</h1>
+    <div class="ui-layer title-screen">
+        <h1 class="game-title">THE MANOR</h1>
+        
         <div class="menu-options">
-            <button onclick="location.href='game.html'">NEW GAME</button>
-            <button onclick="location.href='options.html'">OPTIONS</button>
-            <button onclick="location.href='about.html'">ABOUT</button>
-            <button onclick="location.href='login.html'">LOGIN</button>
+            <div style="color: #eee; font-family: monospace; text-align: left; max-width: 650px; line-height: 1.6; margin-bottom: 20px; background: rgba(0, 0, 0, 0.8); padding: 25px; border-left: 4px solid #800;">
+                <p><strong>Zero Blade</strong> is a 2D action-adventure horror game set within a decaying, post-apocalyptic manor.</p>
+                <p>As a lone survivor armed with a katana, you must investigate the unstable environment infested with zombies. The gameplay focuses on lethal melee combat and logic-based progression rather than platforming.</p>
+                <p style="color: #ff4444;">Explore three levels to find the two mandatory keys to unlock the manor's reinforced security sectors.</p>
+            </div>
+
+            <button class="btn-small" onclick="location.href='index.html'">BACK</button>
         </div>
     </div>
-
-    <div id="user-welcome" class="hidden" style="position: absolute; bottom: 20px; width: 100%; text-align: center;">
-        <p id="welcome-text" style="color: #00ff00; font-family: 'Courier New', Courier, monospace; font-size: 20px; display: inline;"></p>
-        <button id="logout-btn" onclick="game.logout()" style="padding: 5px 10px; font-size: 14px; margin-left: 10px;">LOGOUT</button>
-    </div>
-
-    <script src="game.js"></script>
 </body>
 </html>

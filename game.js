@@ -26,7 +26,7 @@ const game = {
         const savedUser = localStorage.getItem('gameUser');
         const hudNameTag = document.getElementById('game-username-tag');
         if (savedUser && hudNameTag) {
-            hudNameTag.innerText = "Zombie Killer: " + savedUser;
+            hudNameTag.innerText = "PLAYER: " + savedUser;
         }
         
         const assetList = {
@@ -113,14 +113,9 @@ const game = {
     },
 
     triggerSplash() {
-        // Ensure we are reset
         this.active = false;
         this.toggleLayer('splash-screen');
-        
-        // Load the player immediately so the object exists
         this.player = new Player(); 
-        
-        // Short delay for the "Starting..." text, then go!
         setTimeout(() => { 
             this.startGame('easy'); 
         }, 800);
@@ -134,12 +129,8 @@ const game = {
         this.tries = 4;
         this.startTime = Date.now();
         if(this.sounds.bgMusic) this.sounds.bgMusic.play();
-        
-        // Crucial: Set active to true BEFORE setting up the room
         this.active = true; 
         this.setupRoom();
-        
-        // This MUST be 'none' to clear all black overlays
         this.toggleLayer('none'); 
     },
 
@@ -151,14 +142,13 @@ const game = {
             roomDisplay.innerText = this.room === 1 ? "ROOM 1" : "ROOM " + this.room + " — SECTION " + this.subRoom;
         }
 
-        // Room 1 Logics
+        // firest room
         if (this.room === 1) {
             this.zombies.push(new Zombie(600, null, false, diff), new Zombie(1000, null, false, diff));
-        } 
-        // Room 2 Logic
-        else if (this.room === 2) {
+        }  else if (this.room === 2) {
             this.player.hp = Math.min(100, this.player.hp + 15);
             if (this.subRoom === 1) this.zombies.push(new Zombie(800, null, false, diff));
+            
             else if (this.subRoom === 2) {
                 this.platforms.push(new Platform(300, 690, 400), new Platform(800, 400, 400));
                 this.zombies.push(new Zombie(350, this.platforms[0], false, diff));
@@ -169,14 +159,14 @@ const game = {
                 if (this.collectedKeys < 1) this.keys.push({x: 1250, y: 370, col: false});
                 this.zombies.push(new Zombie(1200, pKey, false, diff));
             }
-        } 
-        // Room 3 Logic
-        else if (this.room === 3) {
+        } else if (this.room === 3) {
             if (this.subRoom === 1) {
+                this.player.hp = Math.min(100, this.player.hp + 15);
                 const p1 = new Platform(500, 690, 500);
                 this.platforms.push(p1);
                 this.zombies.push(new Zombie(600, p1, false, diff));
             } else if (this.subRoom === 2) {
+                this.player.hp = Math.min(100, this.player.hp + 15);
                 this.platforms.push(new Platform(400, 690, 500));
                 const pBoss = new Platform(1000, 400, 700);
                 this.platforms.push(pBoss);
@@ -328,7 +318,7 @@ loop() {
         });
 
         this.keys.forEach(k => {
-            if (!k.col && Math.abs(this.player.x - k.x) < 100 && Math.abs(this.player.y - k.y) < 150) {
+            if (!k.col && Math.abs((this.player.x + 55) - k.x) < 80 && this.player.y < k.y + 50 && this.player.y + this.player.h > k.y - 50) {
                 k.col = true; 
                 this.collectedKeys++; 
                 if(this.sounds.keyPop) this.sounds.keyPop.cloneNode().play();

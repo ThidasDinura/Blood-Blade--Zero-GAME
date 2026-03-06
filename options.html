@@ -2,25 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BLOOD BLADE: ZERO - MENU</title>
+    <title>BLOOD BLADE: ZERO - OPTIONS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="menu-main" class="ui-layer title-screen">
-        <h1 class="game-title">BLOOD BLADE: ZERO</h1>
+    <div class="ui-layer title-screen">
+        <h1 class="game-title">CONTROLS</h1>
+        
         <div class="menu-options">
-            <button onclick="location.href='game.html'">NEW GAME</button>
-            <button onclick="location.href='options.html'">OPTIONS</button>
-            <button onclick="location.href='about.html'">ABOUT</button>
-            <button onclick="location.href='login.html'">LOGIN</button>
+            <p style="font-size: 1.5vw; color: #aaa;">MOVE LEFT: <span style="color: #fff;">[A]</span></p>
+            <p style="font-size: 1.5vw; color: #aaa;">MOVE RIGHT: <span style="color: #fff;">[D]</span></p>
+            <p style="font-size: 1.5vw; color: #aaa;">JUMP: <span style="color: #fff;">[SPACE]</span></p>
+            <p style="font-size: 1.5vw; color: #aaa;">ATTACK: <span style="color: #fff;">[F]</span></p>
+            <p style="font-size: 1.5vw; color: #aaa;">INTERACT: <span style="color: #fff;">[E]</span></p>
+
+            <button onclick="location.href='index.html'" style="width: 200px; padding: 10px 0; margin: 0 auto;">BACK</button>
         </div>
     </div>
-
-    <div id="user-welcome" class="hidden" style="position: absolute; bottom: 20px; width: 100%; text-align: center;">
-        <p id="welcome-text" style="color: #00ff00; font-family: 'Courier New', Courier, monospace; font-size: 20px; display: inline;"></p>
-        <button id="logout-btn" onclick="game.logout()" style="padding: 5px 10px; font-size: 14px; margin-left: 10px;">LOGOUT</button>
-    </div>
-
-    <script src="game.js"></script>
 </body>
 </html>

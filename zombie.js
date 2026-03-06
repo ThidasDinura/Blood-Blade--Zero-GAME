@@ -9,7 +9,7 @@ class Zombie {
         this.plat = plat; 
         this.dir = 1; 
         this.alive = true;
-        this.hp = (diff === 'hard' ? 160 : 100) * (isMega ? 3.0 : 1);
+        this.hp = (diff === 'hard' ? 160 : 100) * (isMega ? 2.0 : 1);
         this.maxHp = this.hp;
         this.speed = (diff === 'hard' ? 5 : 3) * (isMega ? 0.8 : 1);
 

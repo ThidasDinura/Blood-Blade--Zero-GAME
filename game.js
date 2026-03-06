@@ -151,12 +151,13 @@ const game = {
             roomDisplay.innerText = this.room === 1 ? "ROOM 1" : "ROOM " + this.room + " — SECTION " + this.subRoom;
         }
 
-        // Room 1 Logic
+        // Room 1 Logics
         if (this.room === 1) {
             this.zombies.push(new Zombie(600, null, false, diff), new Zombie(1000, null, false, diff));
         } 
         // Room 2 Logic
         else if (this.room === 2) {
+            this.player.hp = Math.min(100, this.player.hp + 15);
             if (this.subRoom === 1) this.zombies.push(new Zombie(800, null, false, diff));
             else if (this.subRoom === 2) {
                 this.platforms.push(new Platform(300, 690, 400), new Platform(800, 400, 400));

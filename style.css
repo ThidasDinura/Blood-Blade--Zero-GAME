@@ -390,7 +390,7 @@ button:hover {
     margin: 10px 0 !important; 
     font-size: 1.2vw !important;
 } 
-/* Specific container for the Leaderboard page buttons */
+
 .leaderboard-btn-container {
     display: flex;
     flex-direction: column;
@@ -399,7 +399,7 @@ button:hover {
     margin-top: 30px;
 }
 
-/* Forces the buttons on this page to be slim and uniform */
+
 .leaderboard-btn-container button {
     width: 350px !important;
     padding: 10px 0 !important;

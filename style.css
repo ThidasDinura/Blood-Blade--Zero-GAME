@@ -257,21 +257,7 @@ button:hover {
 }
 
 
-#user-welcome {
-    position: absolute;
-    top: 130px; /* Right under the HP/Room ID */
-    left: 40px;
-    z-index: 200;
-    text-align: left;
-}
 
-#welcome-text {
-    font-size: 1.8vw;
-    color: #0f0; /* Keeping the lime green for "System" messages */
-    text-shadow: 2px 2px #000;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-}
 
 #logout-btn {
     padding: 8px 25px;
@@ -408,3 +394,20 @@ button:hover {
     text-transform: uppercase;
 }
 
+#user-welcome {
+    position: fixed !important; 
+    bottom :30px !important;
+    left: 30px !important;
+    top: auto !important;     
+    z-index: 999;
+    padding-left: 15px;
+    border-left: 4px solid #800;
+}
+
+#welcome-text {
+    font-family: 'Courier New', monospace;
+    color: yellow;
+    font-size: 20px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px #000;
+}

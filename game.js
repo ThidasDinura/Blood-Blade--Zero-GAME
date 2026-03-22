@@ -384,16 +384,22 @@ loop() {
     if (user.trim() !== "" && pin.trim() !== "") {
         localStorage.setItem('gameUser', user);
         // We don't need to call updateAuthUI here because we are leaving the page
-        location.href = 'index.html'; 
+        location.href = 'index.php'; 
     } else {
         alert("Enter both Username and PIN, bro!");
     }
 },
 
     logout() {
-    localStorage.removeItem('gameUser');
-    // Refresh the UI immediately or redirect
-    location.href = 'index.html'; 
+    // Clear the session on the server
+    fetch('auth_process.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `action=logout`
+    }).then(() => {
+        localStorage.removeItem('gameUser');
+        window.location.href = 'index.php'; // Corrected extension
+    });
 },
 
    updateAuthUI(username) {
@@ -430,15 +436,31 @@ loop() {
     }
  },
  saveLeaderboard(time) {
-    let scores = JSON.parse(localStorage.getItem('leaderboard')) || [];
-    
-    // Check localStorage directly right before saving
+    // 1. Still get the user from localStorage (or set as ANONYMOUS)
     const user = localStorage.getItem('gameUser') || 'ANONYMOUS';
-    
-    scores.push({ name: user.toUpperCase(), time: parseFloat(time) });
+    const finalTime = parseFloat(time);
+
+    // 2. Send the data to your PHP "Bridge"
+    fetch('auth_process.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `action=save_score&email=${encodeURIComponent(user)}&score=${finalTime}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log("Database Response:", data);
+        // We still keep a local backup just in case
+        this.saveLocalBackup(user, finalTime);
+    })
+    .catch(err => console.error("Database Save Error:", err));
+},
+
+// Optional: Keep this as a backup if the server is down
+saveLocalBackup(user, time) {
+    let scores = JSON.parse(localStorage.getItem('leaderboard')) || [];
+    scores.push({ name: user.toUpperCase(), time: time });
     scores.sort((a, b) => a.time - b.time);
-    scores = scores.slice(0, 5);
-    localStorage.setItem('leaderboard', JSON.stringify(scores));
+    localStorage.setItem('leaderboard', JSON.stringify(scores.slice(0, 5)));
 },
 
 

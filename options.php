@@ -16,7 +16,7 @@
             <p style="font-size: 1.5vw; color: #aaa;">ATTACK: <span style="color: #fff;">[F]</span></p>
             <p style="font-size: 1.5vw; color: #aaa;">INTERACT: <span style="color: #fff;">[E]</span></p>
 
-            <button onclick="location.href='index.html'" style="width: 200px; padding: 10px 0; margin: 0 auto;">BACK</button>
+            <button onclick="location.href='index.php'" style="width: 200px; padding: 10px 0; margin: 0 auto;">BACK</button>
         </div>
     </div>
 </body>

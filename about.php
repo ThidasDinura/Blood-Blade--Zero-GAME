@@ -19,7 +19,7 @@
                 <p style="color: #ff4444;">Explore three levels to find the two mandatory keys to unlock the manor's reinforced security sectors.</p>
             </div>
 
-            <button class="btn-small" onclick="location.href='index.html'">BACK</button>
+            <button class="btn-small" onclick="location.href='index.php'">BACK</button>
         </div>
     </div>
 </body>

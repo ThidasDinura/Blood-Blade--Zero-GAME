@@ -257,21 +257,7 @@ button:hover {
 }
 
 
-#user-welcome {
-    position: absolute;
-    top: 130px; /* Right under the HP/Room ID */
-    left: 40px;
-    z-index: 200;
-    text-align: left;
-}
 
-#welcome-text {
-    font-size: 1.8vw;
-    color: #0f0; /* Keeping the lime green for "System" messages */
-    text-shadow: 2px 2px #000;
-    margin-bottom: 10px;
-    text-transform: uppercase;
-}
 
 #logout-btn {
     padding: 8px 25px;
@@ -381,4 +367,47 @@ button:hover {
     justify-content: center;
     align-items: center;
     z-index: 2000; 
+}
+.menu-btn { 
+    padding: 10px 60px !important; 
+    height: auto !important; 
+    min-height: 40px !important;
+    width: 350px !important; 
+    margin: 10px 0 !important; 
+    font-size: 1.2vw !important;
+} 
+
+.leaderboard-btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; 
+    margin-top: 30px;
+}
+
+
+.leaderboard-btn-container button {
+    width: 350px !important;
+    padding: 10px 0 !important;
+    font-size: 1.2vw !important;
+    height: auto !important;
+    text-transform: uppercase;
+}
+
+#user-welcome {
+    position: fixed !important; 
+    bottom :30px !important;
+    left: 30px !important;
+    top: auto !important;     
+    z-index: 999;
+    padding-left: 15px;
+    border-left: 4px solid #800;
+}
+
+#welcome-text {
+    font-family: 'Courier New', monospace;
+    color: yellow;
+    font-size: 20px;
+    text-transform: uppercase;
+    text-shadow: 2px 2px #000;
 }

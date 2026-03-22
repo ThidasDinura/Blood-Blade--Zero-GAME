@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -50,7 +51,7 @@
     <div id="menu-death" class="game-overlay pixel-bg hidden">
         <h1 style="color:red; font-size: 100px;">WASTED</h1>
         <button class="menu-btn" onclick="location.reload()">RETRY</button>
-        <button class="menu-btn" onclick="location.href='index.html'">MAIN MENU</button>
+        <button class="menu-btn" onclick="location.href='index.php'">MAIN MENU</button>
     </div>
 
     <div id="menu-win" class="game-overlay pixel-bg hidden">
@@ -60,7 +61,7 @@
             <h3>TOP SURVIVORS</h3>
             <ul id="leaderboard-list"></ul>
         </div>
-        <button class="menu-btn" onclick="location.href='index.html'">MAIN MENU</button>
+        <button class="menu-btn" onclick="location.href='index.php'">MAIN MENU</button>
         <button class="menu-btn" onclick="location.reload()">PLAY AGAIN</button>
     </div>
 

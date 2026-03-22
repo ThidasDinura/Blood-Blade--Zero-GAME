@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BLOOD BLADE: ZERO - ABOUT</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .btn-small { width: 150px !important; padding: 10px !important; font-size: 16px !important; margin: 10px auto !important; }
+    </style>
+</head>
+<body>
+    <div class="ui-layer title-screen">
+        <h1 class="game-title">THE MANOR</h1>
+        
+        <div class="menu-options">
+            <div style="color: #eee; font-family: monospace; text-align: left; max-width: 650px; line-height: 1.6; margin-bottom: 20px; background: rgba(0, 0, 0, 0.8); padding: 25px; border-left: 4px solid #800;">
+                <p><strong>Zero Blade</strong> is a 2D action-adventure horror game set within a decaying, post-apocalyptic manor.</p>
+                <p>As a lone survivor armed with a katana, you must investigate the unstable environment infested with zombies. The gameplay focuses on lethal melee combat and logic-based progression rather than platforming.</p>
+                <p style="color: #ff4444;">Explore three levels to find the two mandatory keys to unlock the manor's reinforced security sectors.</p>
+            </div>
+
+            <button class="btn-small" onclick="location.href='index.php'">BACK</button>
+        </div>
+    </div>
+</body>
+</html>

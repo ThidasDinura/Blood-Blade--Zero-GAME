@@ -17,37 +17,90 @@ const game = {
     startTime: 0,
 
     init() {
-        this.canvas = document.getElementById('gameCanvas'); // Re-check here
-        if (this.canvas) {
-            this.ctx = this.canvas.getContext('2d');
-            this.canvas.width = 1920; 
-            this.canvas.height = 1080;
+    this.canvas = document.getElementById('gameCanvas'); 
+    if (this.canvas) {
+        this.ctx = this.canvas.getContext('2d');
+        this.canvas.width = 1920; 
+        this.canvas.height = 1080;
 
-            const savedUser = localStorage.getItem('gameUser');
-            const hudNameTag = document.getElementById('game-username-tag');
-            if (savedUser && hudNameTag) {
-                hudNameTag.innerText = "Zombie Killer: " + savedUser;
-            }
-            
-            const assetList = {
-                bg: 'image (5).png', 
-                p: 'run.png', 
-                z: 'zombie-walk.png', 
-                d: 'door.png', 
-                plat: 'plat.png'
-            };
-
-            for (let key in assetList) {
-                this.images[key] = new Image();
-                this.images[key].src = assetList[key];
-            }
-
-            window.onkeydown = e => this.keysHandler(e, true);
-            window.onkeyup = e => this.keysHandler(e, false);
-            this.loop();
+        const savedUser = localStorage.getItem('gameUser');
+        const hudNameTag = document.getElementById('game-username-tag');
+        if (savedUser && hudNameTag) {
+            hudNameTag.innerText = "PLAYER: " + savedUser;
         }
-        this.updateAuthUI(localStorage.getItem('gameUser'));
-    },
+        
+        const assetList = {
+            bg: 'image (5).png', 
+            p: 'run.png', 
+            z: 'zombie-walk.png', 
+            d: 'door.png', 
+            plat: 'plat.png'
+        };
+
+        for (let key in assetList) {
+            this.images[key] = new Image();
+            this.images[key].src = assetList[key];
+        }
+
+        // --- FIXED ANIMATION LOADING (Player & Zombie) ---
+        const numbers = ["one", "two", "three"];
+        
+        numbers.forEach((num, index) => {
+            const i = index + 1;
+            
+            // PLAYER WALK
+            this.images[`walk${i}`] = new Image();
+            this.images[`walk${i}`].src = `walk ${num}.png`;
+            this.images[`walk${i}`].onerror = () => console.warn(`Missing: walk ${num}.png`);
+            
+            // PLAYER JUMPING
+            this.images[`jumping${i}`] = new Image();
+            this.images[`jumping${i}`].src = `jumping ${num}.png`;
+            this.images[`jumping${i}`].onerror = () => console.warn(`Missing: jumping ${num}.png`);
+
+            // PLAYER SWORD (sward)
+            this.images[`sword${i}`] = new Image();
+            this.images[`sword${i}`].src = `sward ${num}.png`;
+            this.images[`sword${i}`].onerror = () => console.warn(`Missing: sward ${num}.png`);
+
+            // ZOMBIE WALK (2 frames)
+            if (i <= 2) {
+                this.images[`zwalk${i}`] = new Image();
+                this.images[`zwalk${i}`].src = `zwalk ${num}.png`;
+                this.images[`zwalk${i}`].onerror = () => console.warn(`Missing: zwalk ${num}.png`);
+            }
+
+            // ZOMBIE ATTACK (3 frames)
+            this.images[`zattack${i}`] = new Image();
+            this.images[`zattack${i}`].src = `zattack ${num}.png`;
+            this.images[`zattack${i}`].onerror = () => console.warn(`Missing: zattack ${num}.png`);
+        });
+        const soundList = {
+            bgMusic: 'game background sound.mp3', 
+            jump: 'player-jump.mp3',
+            land: 'falling player.mp3',
+            slash: 'swardslash.mp3',
+            zDie: 'zombie dead.mp3',
+            zTalk: 'zombie-sound.mp3',
+            keyPop: 'key pickup.mp3'
+        };
+
+        this.sounds = {};
+        for (let key in soundList) {
+        this.sounds[key] = new Audio(soundList[key]);
+        }
+
+
+        this.sounds.bgMusic.loop = true;
+        this.sounds.bgMusic.volume = 0.4;
+
+        window.onkeydown = e => this.keysHandler(e, true);
+        window.onkeyup = e => this.keysHandler(e, false);
+        this.loop();
+    }
+
+    this.updateAuthUI(localStorage.getItem('gameUser'));
+},
     keysHandler(e, isDown) {
         const k = e.key.toLowerCase();
         if (k === 'a') this.inputs.a = isDown; 
@@ -60,14 +113,9 @@ const game = {
     },
 
     triggerSplash() {
-        // Ensure we are reset
         this.active = false;
         this.toggleLayer('splash-screen');
-        
-        // Load the player immediately so the object exists
         this.player = new Player(); 
-        
-        // Short delay for the "Starting..." text, then go!
         setTimeout(() => { 
             this.startGame('easy'); 
         }, 800);
@@ -80,12 +128,9 @@ const game = {
         this.collectedKeys = 0;
         this.tries = 4;
         this.startTime = Date.now();
-        
-        // Crucial: Set active to true BEFORE setting up the room
+        if(this.sounds.bgMusic) this.sounds.bgMusic.play();
         this.active = true; 
         this.setupRoom();
-        
-        // This MUST be 'none' to clear all black overlays
         this.toggleLayer('none'); 
     },
 
@@ -97,13 +142,13 @@ const game = {
             roomDisplay.innerText = this.room === 1 ? "ROOM 1" : "ROOM " + this.room + " — SECTION " + this.subRoom;
         }
 
-        // Room 1 Logic
+        // firest room
         if (this.room === 1) {
             this.zombies.push(new Zombie(600, null, false, diff), new Zombie(1000, null, false, diff));
-        } 
-        // Room 2 Logic
-        else if (this.room === 2) {
+        }  else if (this.room === 2) {
+            this.player.hp = Math.min(100, this.player.hp + 15);
             if (this.subRoom === 1) this.zombies.push(new Zombie(800, null, false, diff));
+            
             else if (this.subRoom === 2) {
                 this.platforms.push(new Platform(300, 690, 400), new Platform(800, 400, 400));
                 this.zombies.push(new Zombie(350, this.platforms[0], false, diff));
@@ -114,14 +159,14 @@ const game = {
                 if (this.collectedKeys < 1) this.keys.push({x: 1250, y: 370, col: false});
                 this.zombies.push(new Zombie(1200, pKey, false, diff));
             }
-        } 
-        // Room 3 Logic
-        else if (this.room === 3) {
+        } else if (this.room === 3) {
             if (this.subRoom === 1) {
+                this.player.hp = Math.min(100, this.player.hp + 15);
                 const p1 = new Platform(500, 690, 500);
                 this.platforms.push(p1);
                 this.zombies.push(new Zombie(600, p1, false, diff));
             } else if (this.subRoom === 2) {
+                this.player.hp = Math.min(100, this.player.hp + 15);
                 this.platforms.push(new Platform(400, 690, 500));
                 const pBoss = new Platform(1000, 400, 700);
                 this.platforms.push(pBoss);
@@ -149,10 +194,20 @@ const game = {
 
     performAttack() {
         this.player.atking = true; 
+        
+        // PLAY SWORD SLASH
+        if(this.sounds.slash) this.sounds.slash.cloneNode().play();
+
         setTimeout(() => { this.player.atking = false; }, 150);
+        
         this.zombies.forEach(z => {
             if (z.alive && Math.abs(this.player.x - z.x) < 130 && Math.abs(this.player.y - z.y) < 180) {
-                z.hp -= 40; if (z.hp <= 0) z.alive = false;
+                z.hp -= 40; 
+                
+                if (z.hp <= 0) {
+                    z.alive = false;
+                    if(this.sounds.zDie) this.sounds.zDie.cloneNode().play();
+                }
             }
         });
     },
@@ -253,19 +308,20 @@ loop() {
         }
 
         // --- 1. Update Game Logic ---
-        this.player.update(this.inputs, this.platforms, 1080);
+        this.player.update(this.inputs, this.platforms, 1080, this.sounds);
 
         this.zombies.forEach(z => {
-            z.update(this.player.x, this.player.y);
+            z.update(this.player.x, this.player.y, this.sounds);
             if (z.alive && Math.abs(this.player.x - z.x) < (z.isMega ? 120 : 70) && Math.abs(this.player.y - z.y) < 120) {
                 this.player.hp -= z.isMega ? 1.1 : 0.5;
             }
         });
 
         this.keys.forEach(k => {
-            if (!k.col && Math.abs(this.player.x - k.x) < 100 && Math.abs(this.player.y - k.y) < 150) {
+            if (!k.col && Math.abs((this.player.x + 55) - k.x) < 80 && this.player.y < k.y + 50 && this.player.y + this.player.h > k.y - 50) {
                 k.col = true; 
                 this.collectedKeys++; 
+                if(this.sounds.keyPop) this.sounds.keyPop.cloneNode().play();
                 this.updateKeyUI();
             }
         });
@@ -282,11 +338,11 @@ loop() {
         }
 
         this.platforms.forEach(p => { this.ctx.drawImage(this.images.plat, p.x, p.y, p.w, 60); });
-        this.zombies.forEach(z => { z.draw(this.ctx, this.images.z); });
+        this.zombies.forEach(z => { z.draw(this.ctx, this.images); });
         
         // Draw Player (Only if images.p is loaded)
         if (this.images.p) {
-            this.player.draw(this.ctx, this.images.p);
+            this.player.draw(this.ctx, this.images);
         }
 
         this.keys.forEach(k => { 
@@ -328,16 +384,22 @@ loop() {
     if (user.trim() !== "" && pin.trim() !== "") {
         localStorage.setItem('gameUser', user);
         // We don't need to call updateAuthUI here because we are leaving the page
-        location.href = 'index.html'; 
+        location.href = 'index.php'; 
     } else {
         alert("Enter both Username and PIN, bro!");
     }
 },
 
     logout() {
-    localStorage.removeItem('gameUser');
-    // Refresh the UI immediately or redirect
-    location.href = 'index.html'; 
+    // Clear the session on the server
+    fetch('auth_process.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `action=logout`
+    }).then(() => {
+        localStorage.removeItem('gameUser');
+        window.location.href = 'index.php'; // Corrected extension
+    });
 },
 
    updateAuthUI(username) {
@@ -374,15 +436,31 @@ loop() {
     }
  },
  saveLeaderboard(time) {
-    let scores = JSON.parse(localStorage.getItem('leaderboard')) || [];
-    
-    // Check localStorage directly right before saving
+    // 1. Still get the user from localStorage (or set as ANONYMOUS)
     const user = localStorage.getItem('gameUser') || 'ANONYMOUS';
-    
-    scores.push({ name: user.toUpperCase(), time: parseFloat(time) });
+    const finalTime = parseFloat(time);
+
+    // 2. Send the data to your PHP "Bridge"
+    fetch('auth_process.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `action=save_score&email=${encodeURIComponent(user)}&score=${finalTime}`
+    })
+    .then(response => response.text())
+    .then(data => {
+        console.log("Database Response:", data);
+        // We still keep a local backup just in case
+        this.saveLocalBackup(user, finalTime);
+    })
+    .catch(err => console.error("Database Save Error:", err));
+},
+
+// Optional: Keep this as a backup if the server is down
+saveLocalBackup(user, time) {
+    let scores = JSON.parse(localStorage.getItem('leaderboard')) || [];
+    scores.push({ name: user.toUpperCase(), time: time });
     scores.sort((a, b) => a.time - b.time);
-    scores = scores.slice(0, 5);
-    localStorage.setItem('leaderboard', JSON.stringify(scores));
+    localStorage.setItem('leaderboard', JSON.stringify(scores.slice(0, 5)));
 },
 
 

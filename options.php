@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BLOOD BLADE: ZERO - OPTIONS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="ui-layer title-screen">
+        <h1 class="game-title">CONTROLS</h1>
+        
+        <div class="menu-options">
+            <p style="font-size: 1.5vw; color: #aaa;">MOVE LEFT: <span style="color: #fff;">[A]</span></p>
+            <p style="font-size: 1.5vw; color: #aaa;">MOVE RIGHT: <span style="color: #fff;">[D]</span></p>
+            <p style="font-size: 1.5vw; color: #aaa;">JUMP: <span style="color: #fff;">[SPACE]</span></p>
+            <p style="font-size: 1.5vw; color: #aaa;">ATTACK: <span style="color: #fff;">[F]</span></p>
+            <p style="font-size: 1.5vw; color: #aaa;">INTERACT: <span style="color: #fff;">[E]</span></p>
+
+            <button onclick="location.href='index.php'" style="width: 200px; padding: 10px 0; margin: 0 auto;">BACK</button>
+        </div>
+    </div>
+</body>
+</html>

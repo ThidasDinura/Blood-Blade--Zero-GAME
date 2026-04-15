@@ -17,8 +17,8 @@ $result = $conn->query("SELECT email, high_score FROM users WHERE high_score > 0
     <div class="ui-layer">
         <h1 class="game-title">TOP SURVIVORS</h1>
         
-        <div class="leaderboard-container" style="background: rgba(0,0,0,0.8); border: 4px solid gold; padding: 30px; min-width: 550px;">
-            <ul id="full-leaderboard" style="list-style: none; font-size: 24px; color: #0f0; text-align: left;">
+        <div class="leaderboard-container" style="background: rgba(0,0,0,0.8); border: 3px solid gold; padding: 30px; min-width: 550px;">
+            <ul id="full-leaderboard" style="list-style: none; font-size: 24px; color: #6f00ffbb; text-align: left;">
                 <?php
                 if ($result->num_rows > 0) {
                     $rank = 1;

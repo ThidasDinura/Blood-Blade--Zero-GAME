@@ -277,7 +277,10 @@ const game = {
         input.value = "";
         
         if (this.tries <= 0) {
-            this.toggleLayer('menu-death');
+        this.active = false; // Stop game logic
+        this.toggleLayer('menu-death');
+        this.fetchEncouragement('death-quote');
+
         } else {
             alert("WRONG! ACCESS DENIED.");
         }
@@ -334,7 +337,7 @@ loop() {
             this.ctx.drawImage(this.images.d, 50, 580, 220, 500);
         }
         if (this.room === 1 || (this.room === 2 && this.subRoom === 3) || (this.room === 3 && this.subRoom === 2)) {
-            this.ctx.drawImage(this.images.d, 1700, 580, 220, 500);
+            this.ctx.drawImage(this.images.d, 1670, 580, 220, 500);
         }
 
         this.platforms.forEach(p => { this.ctx.drawImage(this.images.plat, p.x, p.y, p.w, 60); });
@@ -365,13 +368,18 @@ loop() {
         if (prompt) prompt.classList.toggle('hidden', !canGo);
 
         // --- 4. DEATH CHECK ---
-        if (this.player.hp <= 0) {
-            this.player.hp = 0;
-            this.active = false;
-            const hud = document.getElementById('game-hud');
-            if (hud) hud.classList.add('hidden');
-            this.toggleLayer('menu-death');
-        }
+        if (this.player.hp <= 0 && this.active) { 
+    this.player.hp = 0;
+    this.active = false; // Prevents the loop from re-triggering this block
+    
+    const hud = document.getElementById('game-hud');
+    if (hud) hud.classList.add('hidden');
+
+    this.toggleLayer('menu-death');
+    
+    // This call now fires exactly once, letting the API load successfully
+    this.fetchEncouragement('death-quote'); 
+}
     }
     
     requestAnimationFrame(() => this.loop());
@@ -426,6 +434,7 @@ loop() {
 },
     showWinScreen(time) {
     this.toggleLayer('menu-win');
+    
     const stats = document.getElementById('win-stats');
     if (stats) stats.innerText = `ESCAPE TIME: ${time} SECONDS`;
     
@@ -461,6 +470,33 @@ saveLocalBackup(user, time) {
     scores.push({ name: user.toUpperCase(), time: time });
     scores.sort((a, b) => a.time - b.time);
     localStorage.setItem('leaderboard', JSON.stringify(scores.slice(0, 5)));
+},
+
+
+fetchEncouragement(elementId) {
+    const target = document.getElementById(elementId);
+    if (!target) return;
+
+    // 1. Immediately show we are working on it
+    target.innerText = "ACCESSING TACTICAL DATABASE...";
+
+    // 2. Go get the advice from the API
+    fetch('https://api.adviceslip.com/advice')
+        .then(response => {
+            if (!response.ok) throw new Error('API unreachable');
+            return response.json();
+        })
+        .then(data => {
+            // 3. Success! Replace the "Loading" text with the real quote
+            if (data && data.slip && data.slip.advice) {
+                target.innerText = `AGENT ADVICE: "${data.slip.advice}"`;
+            }
+        })
+        .catch(err => {
+            // 4. Backup: If internet fails, show this so it's not stuck on "Loading"
+            console.error("Advice Error:", err);
+            target.innerText = "TACTICAL INTEL: Stay low, move fast. Strike when ready.";
+        });
 },
 
 

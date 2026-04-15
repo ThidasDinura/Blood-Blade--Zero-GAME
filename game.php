@@ -48,22 +48,27 @@
         </div>
     </div>
 
-    <div id="menu-death" class="game-overlay pixel-bg hidden">
-        <h1 style="color:red; font-size: 100px;">WASTED</h1>
-        <button class="menu-btn" onclick="location.reload()">RETRY</button>
-        <button class="menu-btn" onclick="location.href='index.php'">MAIN MENU</button>
-    </div>
 
-    <div id="menu-win" class="game-overlay pixel-bg hidden">
-        <h1 style="color:#00ff00; font-size: 60px;">FACILITY ESCAPED</h1>
-        <h2 id="win-stats"></h2>
-        <div class="leaderboard-container">
-            <h3>TOP SURVIVORS</h3>
-            <ul id="leaderboard-list"></ul>
-        </div>
-        <button class="menu-btn" onclick="location.href='index.php'">MAIN MENU</button>
-        <button class="menu-btn" onclick="location.reload()">PLAY AGAIN</button>
+    <div id="menu-death" class="game-overlay pixel-bg hidden">
+    <h1 style="color:red; font-size: 100px;">WASTED</h1>
+    <p id="death-quote" style="color: #ccc; font-family: monospace; font-style: italic; margin-bottom: 20px;">Tactical advice loading...</p>
+    
+    <button class="menu-btn" onclick="location.reload()">RETRY</button>
+    <button class="menu-btn" onclick="location.href='index.php'">MAIN MENU</button>
+</div>
+
+<div id="menu-win" class="game-overlay pixel-bg hidden">
+    <h1 style="color:#00ff00; font-size: 60px;">FACILITY ESCAPED</h1>
+    <p id="win-quote" style="color: #fff; font-family: monospace; margin-bottom: 15px; border-left: 3px solid #0f0; padding-left: 10px;"></p>
+    
+    <h2 id="win-stats"></h2>
+    <div class="leaderboard-container">
+        <h3>TOP SURVIVORS</h3>
+        <ul id="leaderboard-list"></ul>
     </div>
+    <button class="menu-btn" onclick="location.href='index.php'">MAIN MENU</button>
+    <button class="menu-btn" onclick="location.reload()">PLAY AGAIN</button>
+</div>
 
     <script src="entity.js"></script>
     <script src="player.js"></script>

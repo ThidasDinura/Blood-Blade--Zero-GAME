@@ -29,21 +29,30 @@
 
     <script>
     function sendPin() {
-        const email = document.getElementById('login-email').value;
-        if(!email) return alert("Enter email first!");
+    const email = document.getElementById('login-email').value;
+    if(!email) return alert("Enter email first!");
 
-        fetch('auth_process.php', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: `action=send_pin&email=${email}`
-        })
-        .then(res => res.text())
-        .then(data => {
-            alert(data); // This shows the PIN in an alert since XAMPP doesn't send real emails yet
-            document.getElementById('email-section').classList.add('hidden');
-            document.getElementById('pin-section').classList.remove('hidden');
-        });
-    }
+    const btn = document.querySelector("#email-section button");
+    btn.innerText = "TRANSMITTING..."; // Visual feedback for the player
+    btn.disabled = true;
+
+    fetch('auth_process.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `action=send_pin&email=${email}`
+    })
+    .then(res => res.text())
+    .then(data => {
+        alert(data); // "Verification code sent to your inbox!"
+        document.getElementById('email-section').classList.add('hidden');
+        document.getElementById('pin-section').classList.remove('hidden');
+    })
+    .catch(err => {
+        alert("Connection failed.");
+        btn.innerText = "SEND CODE";
+        btn.disabled = false;
+    });
+}
 
     function verifyPin() {
         const email = document.getElementById('login-email').value;

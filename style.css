@@ -44,20 +44,20 @@ canvas {
 .hidden { display: none !important; }
 
 .title-screen { 
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('image (5).png'); 
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('mainmenu.png'); 
     background-size: 100% 100%; 
 }
 
 .game-title { 
     font-size: 6vw; 
     text-shadow: 0 0 15px #7000ff; 
-    margin-bottom: 40px; 
+    margin-bottom: 30px; 
 }
 
 .menu-options { display: flex; flex-direction: column; gap: 20px; }
 
 button { 
-    padding: 15px 80px; 
+    padding: 10px 30px; 
     font-size: 1.5vw; 
     cursor: pointer; 
     background: rgba(30, 0, 60, 0.9); 
@@ -161,7 +161,7 @@ button:hover {
 
 
 .puzzle-screen {
-    background: linear-gradient(rgba(15, 0, 30, 0.95), rgba(30, 0, 60, 0.95)), url('image (5).png');
+    background: linear-gradient(rgba(15, 0, 30, 0.95), rgba(30, 0, 60, 0.95)), url('mainmenu.png');
     background-size: 100% 100%;
 }
 
@@ -312,7 +312,7 @@ button:hover {
 
 .leaderboard-container {
     background: rgba(0, 0, 0, 0.8);
-    border: 2px solid yellow;
+    border: 2px solid #6f00ff67;
     padding: 20px;
     margin-top: 20px;
     min-width: 300px;
@@ -322,7 +322,7 @@ button:hover {
 #leaderboard-list {
     list-style: none;
     padding: 0;
-    color: #00ff00;
+    color: #6f00ff67;
     text-align: left;
 }
 
@@ -349,7 +349,7 @@ button:hover {
 
 .pixel-bg {
     background-color: #000; /* Fallback to black */
-    background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('image (4).png');
+    background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('mainmenu.png');
     background-size: cover;
     background-position: center;
     image-rendering: pixelated; /* Keeps that retro feel */

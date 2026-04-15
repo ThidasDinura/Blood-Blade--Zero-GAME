@@ -213,7 +213,7 @@ button:hover {
 
 
 .splash-bg { background: #000; }
-.splash-text { font-size: 7vw; color: #0040ffca; }
+.splash-text { font-size: 7vw; color: #0040ff; }
 
 #menu-death h1 { font-size: 8vw; color: #f00; text-shadow: 0 0 20px #f00; }
 #menu-win h1 { font-size: 8vw; color: #0f0; text-shadow: 0 0 20px #0f0; }

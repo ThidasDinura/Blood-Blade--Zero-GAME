@@ -337,7 +337,7 @@ loop() {
             this.ctx.drawImage(this.images.d, 50, 580, 220, 500);
         }
         if (this.room === 1 || (this.room === 2 && this.subRoom === 3) || (this.room === 3 && this.subRoom === 2)) {
-            this.ctx.drawImage(this.images.d, 1700, 580, 220, 500);
+            this.ctx.drawImage(this.images.d, 1670, 580, 220, 500);
         }
 
         this.platforms.forEach(p => { this.ctx.drawImage(this.images.plat, p.x, p.y, p.w, 60); });

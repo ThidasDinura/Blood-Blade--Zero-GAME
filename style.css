@@ -312,7 +312,7 @@ button:hover {
 
 .leaderboard-container {
     background: rgba(0, 0, 0, 0.8);
-    border: 2px solid #6f00ff67;
+    border: 2px solid #a6ff00;
     padding: 20px;
     margin-top: 20px;
     min-width: 300px;
@@ -322,7 +322,7 @@ button:hover {
 #leaderboard-list {
     list-style: none;
     padding: 0;
-    color: #6f00ff67;
+    color: #a6ff00;
     text-align: left;
 }
 

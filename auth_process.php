@@ -26,8 +26,8 @@ if ($action == 'send_pin') {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com'; 
         $mail->SMTPAuth   = true;
-        $mail->Username   = '1thi2da3s@gmail.com'; 
-        $mail->Password   = 'bdisoaouucpgctvy'; 
+        $mail->Username   = 'thidas@gmail.com'; 
+        $mail->Password   = 'your pass'; 
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
         $mail->SMTPOptions = array(
